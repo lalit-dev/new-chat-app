@@ -15,8 +15,21 @@ app.use(express.json());
 
 io.on("connection", (socket) => {
     var email;
-    console.log("new users connected with SocketId: ");
+    console.log("new users connected ");
 
+    socket.emit("newMessage",{
+        from: "Admin",
+        message: " Welcome To My World "
+    });
+
+    socket.broadcast.emit("newMessage", {
+        from:"Admin",
+        message:"new User joined"
+    })
+
+    socket.broadcast.emit("newUser",{
+        message:"new User connected"
+    });
 
     socket.on("disconnect", () => {
         console.log("User is disconnected");
@@ -32,7 +45,17 @@ io.on("connection", (socket) => {
 
     socket.on('addMessage', function(message){
         console.log("NEW MESSAGE: ",message);
-        io.emit('newMessage', {from:'lalit yadav', text:message.text, createdAt:new Date().toISOString()});
+        // io.emit('newMessage', {
+        //     from:'lalit yadav',
+        //     text:message.text,
+        //     createdAt:new Date().toISOString()
+        // });
+
+        socket.broadcast.emit('newMessage', {
+            from:'lalit yadav',
+            text:message.text,
+            createdAt:new Date().toISOString()
+        });
     })
 
 
