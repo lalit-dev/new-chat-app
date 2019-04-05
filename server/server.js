@@ -14,10 +14,28 @@ app.use(express.static(publicPath))
 app.use(express.json());
 
 io.on("connection", (socket) => {
+    var email;
     console.log("new users connected with SocketId: ");
+
+
     socket.on("disconnect", () => {
         console.log("User is disconnected");
     })
+
+    socket.on('createEmail', function(data){
+        console.log("createEmail: ",data);
+    })
+
+    socket.emit('newEmail', email);
+
+    socket.emit('newMessage', {from:'lalit yadav', text:'hello everyone', createdAt:new Date().toISOString()});
+
+    socket.on('addMessage', function(message){
+        console.log("NEW MESSAGE: ",message)
+    })
+
+
+
 })
 
 
