@@ -28,10 +28,11 @@ io.on("connection", (socket) => {
 
     socket.emit('newEmail', email);
 
-    socket.emit('newMessage', {from:'lalit yadav', text:'hello everyone', createdAt:new Date().toISOString()});
+    // io.emit('newMessage', {from:'lalit yadav', text:'hello everyone', createdAt:new Date().toISOString()});
 
     socket.on('addMessage', function(message){
-        console.log("NEW MESSAGE: ",message)
+        console.log("NEW MESSAGE: ",message);
+        io.emit('newMessage', {from:'lalit yadav', text:message.text, createdAt:new Date().toISOString()});
     })
 
 

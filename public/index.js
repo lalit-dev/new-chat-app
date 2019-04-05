@@ -13,7 +13,7 @@ socket.on('newEmail', function(data){
     console.log("newEmail ",data);
 })
 
-socket.emit('addMessage',{to:'rohit yadav',message:"erfsvjijskm"})
+socket.emit('addMessage',{to:'rohit yadav',message:"sample message"})
 
 socket.on('newMessage',function(message){
     console.log("new Message: ",message)
