@@ -4,6 +4,8 @@ const http = require('http');
 const socketIO = require('socket.io');
 const express = require('express');
 
+var {generateMessage} = require('./utils/message');
+
 var port = process.env.PORT || 5000;
 var publicPath = path.join(__dirname, '../public');
 var app = express();
@@ -17,19 +19,10 @@ io.on("connection", (socket) => {
     var email;
     console.log("new users connected ");
 
-    socket.emit("newMessage",{
-        from: "Admin",
-        message: " Welcome To My World "
-    });
+    socket.emit("newMessage",generateMessage("Admin", " Welcome To My World "));
 
-    socket.broadcast.emit("newMessage", {
-        from:"Admin",
-        message:"new User joined"
-    })
+    socket.broadcast.emit("newMessage", generateMessage("Admin", "new User joined"))
 
-    socket.broadcast.emit("newUser",{
-        message:"new User connected"
-    });
 
     socket.on("disconnect", () => {
         console.log("User is disconnected");
@@ -51,11 +44,7 @@ io.on("connection", (socket) => {
         //     createdAt:new Date().toISOString()
         // });
 
-        socket.broadcast.emit('newMessage', {
-            from:'lalit yadav',
-            text:message.text,
-            createdAt:new Date().toISOString()
-        });
+        socket.broadcast.emit('newMessage', generateMessage("lalit yadav", message.text));
     })
 
 
