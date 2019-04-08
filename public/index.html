@@ -5,9 +5,16 @@
         <meta charset="utf-8">
     </head>
     <body>
-        <p>***  this is a chat app</p>
+        <p>let's chat</p>
+        <form id="message-form">
+            <input name="message" type="text" placeholder="Message">
+            <button>send</button>
+        </form>
+
+        <ol id="messages"></ol>
 
         <script src="/socket.io/socket.io.js"></script>
+        <script src="libs/jquery-3.3.1.js"></script>
         <script src="./index.js"></script>
     </body>
 

@@ -21,7 +21,7 @@ io.on("connection", (socket) => {
 
     socket.emit("newMessage",generateMessage("Admin", " Welcome To My World "));
 
-    socket.broadcast.emit("newMessage", generateMessage("Admin", "new User joined"))
+    socket.broadcast.emit("newMessage", generateMessage("Admin", "population increased"));
 
 
     socket.on("disconnect", () => {
@@ -36,27 +36,24 @@ io.on("connection", (socket) => {
 
     // io.emit('newMessage', {from:'lalit yadav', text:'hello everyone', createdAt:new Date().toISOString()});
 
-    socket.on('addMessage', function(message){
+    socket.on('addMessage', function(message, callback){
         console.log("NEW MESSAGE: ",message);
+        callback("callback from server");
         // io.emit('newMessage', {
         //     from:'lalit yadav',
         //     text:message.text,
         //     createdAt:new Date().toISOString()
         // });
 
-        socket.broadcast.emit('newMessage', generateMessage("lalit yadav", message.text));
+        socket.emit('newMessage', generateMessage(message.from, message.text));
     })
 
-
-
 })
-
 
 
 app.get('/temp', (req, res) => {
     res.send("sample text")
 })
-
 
 
 server.listen(port, () => {
