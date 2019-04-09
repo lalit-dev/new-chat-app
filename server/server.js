@@ -4,7 +4,7 @@ const http = require('http');
 const socketIO = require('socket.io');
 const express = require('express');
 
-var {generateMessage} = require('./utils/message');
+var {generateMessage, generateLocationMessage} = require('./utils/message');
 
 var port = process.env.PORT || 5000;
 var publicPath = path.join(__dirname, '../public');
@@ -45,7 +45,11 @@ io.on("connection", (socket) => {
         //     createdAt:new Date().toISOString()
         // });
 
-        socket.emit('newMessage', generateMessage(message.from, message.text));
+        io.emit('newMessage', generateMessage(message.from, message.text));
+    })
+
+    socket.on('createLocation', function(location){
+        io.emit('newLocationMessage', generateLocationMessage('User', location.lat, location.long));
     })
 
 })
