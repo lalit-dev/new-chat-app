@@ -15,20 +15,23 @@ socket.on('newEmail', function(data){
 
 socket.emit('addMessage',{from:'rohit yadav',text:"sample message"}, function(response){
     console.log("response from server: ",response)
+
 })
 
 socket.on('newMessage',function(message){
+    var formattedTime = moment(message.createdAt).format('h:mm a');
     console.log("new Message: ",message)
     var li = jQuery('<li></li>');
-    li.text(`${message.from}: ${message.text}`);
+    li.text(`${message.from} ${formattedTime}: ${message.text}`);
     jQuery("#messages").append(li);
 })
 
 socket.on('newLocationMessage', function(message){
+    var formattedTime = moment(message.createdAt).format("h:mm a");
     console.log("LOCATION: ",message);
     var li = jQuery('<li></li>')
     var a = jQuery('<a target="_blank">my current location</a>')
-    li.text(`${message.from}: `);
+    li.text(`${message.from} ${formattedTime}: `);
     a.attr('href', message.url);
     li.append(a);
     jQuery('#messages').append(li);
@@ -42,12 +45,15 @@ socket.on('newLocationMessage', function(message){
 jQuery('#message-form').on('submit', (e) => {
     e.preventDefault();
     console.log("EEEEEEEEEEEEEE",e);
+    var messageInput = jQuery('[name=message]');
 
     socket.emit('addMessage', {
         from:'User',
-        text:jQuery('[name=message]').val()
+        text:messageInput.val()
     }, function(data){
         console.log("data = ",data);
+        messageInput.val('')
+
     })
 })
 
