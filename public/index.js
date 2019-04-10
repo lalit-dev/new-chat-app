@@ -59,11 +59,16 @@ sendLocation.on('click', (e) => {
     if(!navigator.geolocation){
         return alert('Geolocation not supported by your browser');
     }
+
+    sendLocation.attr('disabled', 'disabled').text('Sending location...');
+
     navigator.geolocation.getCurrentPosition(function(position){
+        sendLocation.removeAttr('disabled').text('Send location');
         console.log('Position = ',position);
         socket.emit('createLocation', {lat:position.coords.latitude, long:position.coords.longitude})
 
     }, function(){
+        sendLocation.removeAttr('disabled').text('Send location');
         return alert('Unable to fetch geoLocation')
     })
 })
