@@ -11,11 +11,11 @@ const constants = {
 
 const addNotes = (title, body) => {
     const notes = loadNotes();
-    const duplicateNote = notes.find( (note) => {
+    const duplicateNote = notes.find((note) => {
         return note.title === title;
     })
 
-    if(duplicateNote){
+    if (duplicateNote) {
         notes.push({
             title: title,
             body: body
@@ -31,8 +31,8 @@ const removeNotes = (title) => {
     const notes = loadNotes();
     const deletedNotes = [];
 
-    const updatedNotes = notes.filter( (note) => {
-        if(note.title === title){
+    const updatedNotes = notes.filter((note) => {
+        if (note.title === title) {
             deletedNotes.push(note);
             return false;
         } else {
@@ -40,9 +40,9 @@ const removeNotes = (title) => {
         }
     })
 
-    if(notes.length > updatedNotes.length){
+    if (notes.length > updatedNotes.length) {
         console.log(chalk.inverse.green(' Note Removed '));
-    saveNotes(updatedNotes);
+        saveNotes(updatedNotes);
     } else {
         console.log(chalk.red.inverse('Note not found'))
     }
@@ -61,11 +61,11 @@ const listNotes = () => {
 const readNotes = (title) => {
     const notes = loadNotes();
 
-    const note = notes.find( note => {
+    const note = notes.find(note => {
         return note.title === title;
     })
 
-    if(note){
+    if (note) {
         console.log(chalk.green.inverse('Note Found'));
         return note
     } else {
@@ -87,7 +87,7 @@ function loadNotes() {
 }
 
 const saveNotes = function (notes) {
-    const notesString = JSON.stringify(notes); 
+    const notesString = JSON.stringify(notes);
     fs.writeFileSync(constants.notesFilePath, notesString)
 }
 

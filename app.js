@@ -11,20 +11,20 @@ yargs.version('0.1.0');
 yargs.command({
   command: 'add',
   describe: 'add note',
-  builder:{
-    title:{
+  builder: {
+    title: {
       describe: 'Note Title',
       demandOption: true,
       type: "string"
     },
-    body:{
+    body: {
       describe: 'Note body',
       demandOption: true,
       type: 'string'
     }
 
   },
-  handler: function(argv) {
+  handler: function (argv) {
     console.log("[ADD] Title: " + argv.title + " /n body:" + argv.body);
     notes.add(argv.title, argv.body);
   }
@@ -35,7 +35,7 @@ yargs.command({
   command: 'rmv',
   describe: "remove a note",
   builder: {
-    title:{
+    title: {
       describe: 'Note title',
       demandOption: true,
       type: 'string'
